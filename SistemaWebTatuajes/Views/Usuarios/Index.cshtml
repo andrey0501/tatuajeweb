@@ -1,0 +1,104 @@
+﻿@model List<SistemaWebTatuajes.Models.Usuarios>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            Lista de Usuarios
+        </div>
+        <div class="card-body">
+            <p>
+                <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Agregar nuevo usuario</a>
+            </p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>Id Usuario</th>
+                            <th>USUARIO</th>
+                            <th>Nombre Completo</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    @if (Model.Count > 0 || Model != null)
+                    {
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.id_Usuario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.nom_Usuario)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.nombre_Completo)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.email)</td>
+                                    @if (item.Id_Rol == 1){<td>Administrador</td>}else{<td>Usuario</td>}
+                                    <td>
+                                        <button class="btn btn-warning" onclick="editar(@item.id_Usuario)"><i class="fas fa-edit"></i></button>
+                                        <button class="btn btn-danger" onclick="eliminar(@item.id_Usuario)"><i class="fas fa-trash"></i></button>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    }
+                </table>
+            </div>
+            <partial name="Paginador" />
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+
+
+        //FUNCION PARA EDITAR
+        function editar(id) {
+            window.location.href = "/Usuarios/Edit?id_Usuario=" + id;
+        }
+        //FUNCION PARA ELIMINAR
+        function eliminar(id) {
+
+            alertify.confirm("Información", "Esta seguró que desea eliminar el usuario seleccionado?",
+                function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Usuarios/Delete",
+                        data: { id_usuario: id },
+                        beforeSend: function () {
+                            $(".contenedor-loader").slideToggle();
+                        },
+                        success: function (r) {
+                            switch (r) {
+                                case 1:
+                                    window.location.href = "/Usuarios/Index";
+                                    break;
+                                case 2:
+                                    $(".contenedor-loader").slideToggle();
+                                    alertify.error("<i class='fas fa-times'></i> Error al eliminar.");
+                                    break;
+                            }
+                        },
+                        error: function () {
+                            $("#contenedor-loader").slideToggle();
+                        }
+                    });
+                },
+                function () {
+                    alertify.error('Canceló.');
+                });
+
+        }
+        //FUNCION PARA EL PAGINADOR
+        $(".page-link").on("click", function () {
+            var pagina = $(this).text();
+            window.location.href = "/Usuarios/Index?pagina=" + pagina;
+        });
+
+    </script>
+}

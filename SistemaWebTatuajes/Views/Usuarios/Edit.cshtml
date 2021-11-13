@@ -1,0 +1,101 @@
+﻿@model SistemaWebTatuajes.ViewModel.EditUsuarioViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<div class="container col-lg-10">
+    <div class="card shadow">
+        <div class="card-header text-center font-weight-bold border-relleno">
+            Actualizar usuarios
+        </div>
+        <div class="card-body">
+            <form asp-action="">
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label for="id_Usuario" class="control-label font-weight-bolder">Id Usuarios<span class="text-danger font-weight-bold"> *</span></label>
+                        <input asp-for="id_Usuario" class="form-control" readonly />
+                        <span asp-validation-for="id_Usuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="nom_Usuario" class="control-label font-weight-bold">Nombre de usuario<span class="text-danger font-weight-bold"> *</span></label>
+                        <input asp-for="nom_Usuario" class="form-control" />
+                        <span asp-validation-for="nom_Usuario" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="nombre_Completo" class="control-label font-weight-bold">Nombre Completo<span class="text-danger font-weight-bold"> *</span></label>
+                        <input asp-for="nombre_Completo" class="form-control" />
+                        <span asp-validation-for="nombre_Completo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label for="email" class="control-label font-weight-bold">Email<span class="text-danger font-weight-bold"> *</span></label>
+                        <input asp-for="email" class="form-control" />
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label for="Id_Rol" class="control-label font-weight-bold">Rol<span class="text-danger font-weight-bold"> *</span></label>
+                        <select asp-for="Id_Rol" asp-items="@ViewBag.Roles" class="form-control"></select>
+                        <span asp-validation-for="Id_Rol" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="btn-actualizar"><i class="fas fa-check"></i> Actualizar</button>
+                </div>
+            </form>
+        </div>
+        <div class="m-3">
+            <a asp-action="Index">Ir al listado</a>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    /*METODO AJAX*/
+    $("#btn-actualizar").on("click", function (e) {
+
+        if (!$("form").valid()) {
+            return;
+        }
+
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            data: $("form").serialize(),
+            url: "/Usuarios/Update",
+            beforeSend: function () {
+                $(".contenedor-loader").slideToggle();
+            },
+            success: function (r) {
+                $(".contenedor-loader").slideToggle();
+                mostrarMensajeInfo(r);
+            },
+            error: function () {
+                $(".contenedor-loader").slideToggle();
+            }
+
+        });
+
+
+    });
+    /*MUESTRA UN MENSAJE AL USUARIO*/
+    function mostrarMensajeInfo(r) {
+        switch (r) {
+            case 1:
+                alertify.success("<i class='fas fa-check'></i> Actualizado con éxito.");
+                break;
+            case 2:
+                alertify.error("<i class='fas fa-times'></i> Error al actualizar.");
+                break;
+        }
+    }
+</script>
+}

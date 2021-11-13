@@ -1,0 +1,175 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZWELK1J54"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6ZWELK1J54');
+    </script>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/lib/FontAwesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/lib/animate/animate.min.css" rel="stylesheet" />
+    <link href="~/lib/animate/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+</head>
+<body style="background:black;">
+    <!-- Top Bar Start -->
+
+    <div class="top-bar d-none d-md-block">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="top-bar-left">
+                        <div class="text">
+                            <i class="far fa-clock"></i>
+                            <h2>8:00am - 6:00pm</h2>
+                            <p>Lunes - Domingo</p>
+                        </div>
+                        <div class="text">
+                            <i class="fa fa-phone-alt"></i>
+                            <h2>+506 6360-9190</h2>
+                            <p>Para citas</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="top-bar-right">
+                        <div class="social">
+                            <a href=""><i class="fab fa-twitter"></i></a>
+                            <a href=""><i class="fab fa-facebook"></i></a>
+                            <a href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a href=""><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar End <link rel="alternate" lang="en" href="en/doc2.html" /> -->
+    <!-- Nav Bar Start -->
+    <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">Tattoos</a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav ml-auto">
+                    <a href="/Home/Index" class="nav-item nav-link active">Home</a>
+                    <a href="/Home/Artistas" class="nav-item nav-link">Artistas</a>
+                    <a href="/Home/Calificar" class="nav-item nav-link">Comentario</a>
+                    <a href="/Security/Index" class="nav-item nav-link">Administrador</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
+    <!-- Carousel Start -->
+    <div class="carousel">
+        <div class="container-fluid">
+            <div class="owl-carousel">
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/img/tatuaje0.jpg" alt="Image">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/img/tatuaje1.jpg" alt="Image">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/img/tatuaje2.jpg" alt="Image">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="carousel-img">
+                        <img src="~/img/tatuaje3.jpg" alt="Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @RenderBody()
+
+    <!-- Blog End -->
+    <!-- Footer Start -->
+    <div class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="footer-contact">
+                                <h2>Ubicación</h2>
+                                <p><i class="fa fa-map-marker-alt"></i>25 sur del Banco Popular, Antigua 27calle 1, Naranjo, Alajuela, Costa Rica</p>
+                                <p><i class="fa fa-phone-alt"></i>+506 6360 9190</p>
+                                <p><i class="fa fa-envelope"></i>newskullnaranjoc@gmail.com</p>
+                                <div class="footer-social">
+                                    <!--<a href=""><i class="fab fa-twitter"></i></a><!---->
+                                    <a href=""><i class="fab fa-facebook-f"></i></a>
+                                    <!--<a href=""><i class="fab fa-youtube"></i></a>-->
+                                    <a href=""><i class="fab fa-instagram"></i></a>
+                                    <!--<a href=""><i class="fab fa-linkedin-in"></i></a>-->
+                                </div>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="col-md-6">
+                            <div class="footer-link">
+                                <h2>Quick Links</h2>
+                                <a href="">Terms of use</a>
+                                <a href="">Privacy policy</a>
+                                <a href="">Cookies</a>
+                                <a href="">Help</a>
+                                <a href="">FQAs</a>
+                            </div>
+                        </div>
+                            -->
+
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="footer-newsletter">
+                        <h2>Visión</h2>
+
+                        <p>
+                            Ser una empresa con un crecimiento constante para ser líderes en arte corporal, y así hacer de los tatuajes y modificaciones corporales cada día mejores para nuestros clientes y artistas.
+                        </p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="~/lib/owlcarousel/easing.min.js"></script>
+    <script src="~/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="~/lib/owlcarousel/waypoints.min.js"></script>
+    <script src="~/lib/owlcarousel/counterup.min.js"></script>
+    <script src="~/js/jqBootstrapValidation.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+    </html>

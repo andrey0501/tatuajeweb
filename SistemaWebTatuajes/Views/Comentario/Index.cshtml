@@ -1,0 +1,56 @@
+﻿@model List<SistemaWebTatuajes.Models.Califica>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container col-lg-8">
+    @if (Model.Count != 0 && Model != null)
+    {
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                Lista de comentarios
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th>Id</th>
+                                <th>Calificación 1 a 5</th>
+                                <th>Comentario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(modelItem => item.Id_Califica)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.calificacion)</td>
+                                    <td>@Html.DisplayFor(modelItem => item.comentario)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <partial name="Paginador" />
+            </div>
+        </div>
+    }
+    else
+    { <p>No hay información.</p>}
+
+</div>
+
+@section Scripts {
+    <script>
+        //FUNCION PARA EL PAGINADOR
+        $(".page-link").on("click", function () {
+            var pagina = $(this).text();
+            window.location.href = "/Comentario/Index?pagina=" + pagina;
+        });
+
+    </script>
+}
+

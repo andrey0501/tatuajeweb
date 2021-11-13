@@ -1,0 +1,46 @@
+﻿@model List<SistemaWebTatuajes.Models.Artistas>
+
+@{
+    ViewData["Title"] = "Artistas";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+<div class="container mb-4">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-12 col-sm-12 mb-4">
+                <img src="~/Artistas/@item.foto" class="col-lg-12 col-md-12 col-sm-12" 
+                     style="width:100%; height:100%;"/>
+            </div>
+            <div class="col-lg-9 col-md-12 col-sm-12 mb-4">
+                <div class="form-group">
+                    <h5>@item.nombre</h5>
+                </div>
+                <div class="form-group">
+                    <p class="text-justify">@item.bibligrafia</p>
+                </div>
+                <div class="form-group">
+                    @Html.ActionLink("Ver tatuajes elaborados", "Tatuajes", new { cedula = item.Id_Artista })
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="container text-center">
+    <partial name="Paginador" />
+</div>
+
+@section Scripts {
+    <script>
+        //FUNCION PARA EL PAGINADOR
+        $(".page-link").on("click", function () {
+            var pagina = $(this).text();
+            window.location.href = "/Home/Artistas?pagina=" + pagina;
+        });
+    </script>
+}
+
+
+
+

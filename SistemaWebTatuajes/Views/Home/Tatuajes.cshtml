@@ -1,0 +1,25 @@
+﻿@model IEnumerable<SistemaWebTatuajes.Models.Tatuajes>
+
+@{
+    ViewData["Title"] = "Tatuajes";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+
+<div class="container">
+    <div class="section-header">
+        <h2>Tatuajes</h2>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-3 col-md-12 col-sm-12">
+                <div class="form-group">
+                    <img src="~/Tipos/@item.Nom_Tatuaje" class="col-md-12 col-sm-12" height="300" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

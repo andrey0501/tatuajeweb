@@ -1,0 +1,107 @@
+﻿@model List<SistemaWebTatuajes.Models.Artistas>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            Lista de Artistas
+        </div>
+        <div class="card-body">
+            <p>
+                <a asp-action="Create" class="btn btn-success"><i class="fas fa-plus"></i> Agregar nuevo artista</a>
+            </p>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>Cédula</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Bibliografía</th>
+                            <th>Foto</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr foto="@item.foto">
+                                <td>@Html.DisplayFor(modelItem => item.Id_Artista)</td>
+                                <td>@Html.DisplayFor(modelItem => item.nombre)</td>
+                                <td>@Html.DisplayFor(modelItem => item.apellidos)</td>
+                                <td>@Html.DisplayFor(modelItem => item.bibligrafia)</td>
+                                <td><img src="~/Artistas/@item.foto" class="img-artistas" /></td>
+                                <td>
+                                    <button class="btn btn-warning" onclick="editar(@item.Id_Artista)"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <partial name="Paginador" />
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        //FUNCION PARA OBTENER LA CEDULA Y FOTO
+        $(document).on("click", '.btn-danger', function (e) {
+            e.preventDefault();
+
+            var cedula = $(this).parents("tr").find("td")[0].innerHTML.trim();
+            const element = document.activeElement.parentElement.parentElement;
+            const foto = $(element).attr("foto").trim();
+
+            eliminar(cedula, foto);
+        });
+        //FUNCION ELIMINAR
+        function eliminar(cedula, foto) {
+            alertify.confirm("Información", "Esta seguró que desea eliminar el artista seleccionado?",
+                function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Artista/Delete",
+                        data: { cedula: cedula, foto: foto },
+                        beforeSend: function () {
+                            $(".contenedor-loader").slideToggle();
+                        },
+                        success: function (r) {
+                            switch (r) {
+                                case 1:
+                                    window.location.href = "/Artista/Index";
+                                    break;
+                                case 2:
+                                    $(".contenedor-loader").slideToggle();
+                                    alertify.error("<i class='fas fa-times'></i> Error al eliminar.");
+                                    break;
+                            }
+                        },
+                        error: function () {
+                            $("#contenedor-loader").slideToggle();
+                        }
+                    });
+                },
+                function () {
+                    alertify.error('Canceló.');
+                });
+        }
+        //FUNCION PARA EDITAR
+        function editar(cedula) {
+            window.location.href = "/Artista/Edit?cedula=" + cedula;
+        }
+        //FUNCION PARA EL PAGINADOR
+        $(".page-link").on("click", function () {
+            var pagina = $(this).text();
+            window.location.href = "/Artista/Index?pagina=" + pagina;
+        });
+
+    </script>
+}

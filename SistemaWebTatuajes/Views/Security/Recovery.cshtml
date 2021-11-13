@@ -1,0 +1,110 @@
+﻿@model SistemaWebTatuajes.ViewModel.RecuperaContrasenaViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZWELK1J54"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6ZWELK1J54');
+    </script>
+
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Recovery</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/FontAwesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/Alertify/alertify.min.css" rel="stylesheet" />
+    <link href="~/lib/Alertify/default.min.css" rel="stylesheet" />
+
+</head>
+<body>
+
+    <partial name="LoaderPartial" />
+
+    <div class="container col-lg-4 mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white">
+                Recuperar Contraseña
+            </div>
+            <div class="card-body">
+                <form asp-action="Recovery">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                            </div>
+                            <input asp-for="email" class="form-control" placeholder="Ingrese el email registrado"/>
+                        </div>
+                        <span asp-validation-for="email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-outline-danger" id="btn-enviar-email"><i class="fas fa-paper-plane"></i> Enviar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/Alertify/alertify.min.js"></script>
+
+    <script>
+        //METODO AJAX
+        $("#btn-enviar-email").on("click", function (e) {
+            if (!$("form").valid()) {
+                return;
+            }
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/Security/SendEmail",
+                data: $("form").serialize(),
+                beforeSend: function () {
+                    $(".contenedor-loader").slideToggle();
+                },
+                success: function (r) {
+                    $(".contenedor-loader").slideToggle();
+                    mostrarMensajeInfo(r);
+                },
+                error: function () {
+                    $(".contenedor-loader").slideToggle();
+                }
+            });          
+        });
+        //METODO PARA MOSTRAR UN MENSAJE AL USUARIO
+        function mostrarMensajeInfo(r) {
+            switch (r) {
+                case 1:
+                    alertify.alert("Información","Se envió un mensaje a su email con los pasos para actualizar la contraseña.");                                                         
+                    break;
+                case 2:
+                    alertify.alert("Información", "El email ingresado no existe en el sistema.");                                     
+                    break;
+                case 3:
+                    alertify.alert("Error", "Lo sentimos ocurrió un error al procesar su solicitud.");                 
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+﻿<nav aria-label="Page navigation example">
+    <ul class="pagination">
+        @for (int i = 1; i <= ViewBag.totalpaginas; i++)
+        {
+            <li class="page-item"><a class="page-link" href="#">@i</a></li>
+        }
+    </ul>
+</nav>
+

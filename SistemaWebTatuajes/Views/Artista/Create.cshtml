@@ -1,0 +1,97 @@
+﻿@model SistemaWebTatuajes.ViewModel.ArtistasViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="container col-lg-8">
+    <div class="card shadow">
+        <div class="card-header text-center border-relleno font-weight-bold">
+            Registrar Artista
+        </div>
+        <div class="card-body">
+            <form asp-action="Create" enctype="multipart/form-data" id="formArtistas">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label for="nombre" class="control-label font-weight-bolder">Nombre<span class="text-danger font-weight-bold"> *</span></label>
+                    <input asp-for="nombre" class="form-control" />
+                    <span asp-validation-for="nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="apellidos" class="control-label font-weight-bolder">Apellidos<span class="text-danger font-weight-bold"> *</span></label>
+                    <input asp-for="apellidos" class="form-control" />
+                    <span asp-validation-for="apellidos" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="bibligrafia" class="control-label font-weight-bolder">Bibliografía<span class="text-danger font-weight-bold"> *</span></label>
+                    <textarea asp-for="bibligrafia" class="form-control" rows="7" cols="7" style="resize:none;"></textarea>
+                    <span asp-validation-for="bibligrafia" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="fotoView" class="control-label font-weight-bolder">Foto<span class="text-danger font-weight-bold"> *</span></label>
+                    <input asp-for="fotoView" class="form-control-file" />
+                    <span asp-validation-for="fotoView" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-info" id="btn-guardar"><i class="fas fa-check"></i> Guardar</button>
+                </div>
+            </form>
+            <div>
+                <a asp-action="Index">Ir al listado</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script>
+        /*METODO AJAX*/
+        $("#btn-guardar").on("click", function (e) {
+
+            if (!$("form").valid()) {
+                return;
+            }
+
+            e.preventDefault();
+            var datos = new FormData($("#formArtistas")[0]);
+
+            $.ajax({
+                type: "POST",
+                data: datos,
+                url: "/Artista/Insert",
+                contentType: false,
+                processData: false,
+                beforeSend: function () {
+                    $(".contenedor-loader").slideToggle();
+                },
+                success: function (r) {
+                    $(".contenedor-loader").slideToggle();
+                    mostrarMensajeInfo(r);
+                },
+                error: function () {
+                    $(".contenedor-loader").slideToggle();
+                }
+
+            });
+
+
+        });
+        /*MUESTRA UN MENSAJE AL USUARIO*/
+        function mostrarMensajeInfo(r) {
+            switch (r) {
+                case 1:
+                    alertify.success("<i class='fas fa-check'></i> Guardado con éxito.");
+                    break;
+                case 2:
+                    alertify.error("<i class='fas fa-times'></i> Error al guardar.");
+                    break;
+
+            }
+            $("form")[0].reset();
+        }
+    </script>
+}

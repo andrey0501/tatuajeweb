@@ -1,0 +1,122 @@
+﻿@model SistemaWebTatuajes.ViewModel.ActualizarContrasenaViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6ZWELK1J54"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-6ZWELK1J54');
+    </script>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>ActualizarContrasena</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/site.css" rel="stylesheet" />
+    <link href="~/lib/FontAwesome/css/all.css" rel="stylesheet" />
+    <link href="~/lib/Alertify/alertify.min.css" rel="stylesheet" />
+    <link href="~/lib/Alertify/default.min.css" rel="stylesheet" />
+</head>
+<body>
+    
+    <partial name="LoaderPartial"/>
+
+    <div class="container col-lg-4 mt-5">
+        <div class="card shadow">
+            <div class="card-header bg-danger text-white font-weight-bold">
+                Actualizar contraseña
+            </div>
+            <div class="card-body">
+                <form asp-action="ActualizarContrasena">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    @Html.AntiForgeryToken()
+
+                    <input asp-for="token" type="hidden" />
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input asp-for="contrasena" class="form-control" placeholder="Contraseña" />
+                        </div>
+                        <span asp-validation-for="contrasena" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            </div>
+                            <input asp-for="confirmarContrasena" class="form-control" placeholder="Confirmar Contraseña" />
+                        </div>
+                        <span asp-validation-for="confirmarContrasena" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-outline-danger btn-block" id="btn-actualizar-paswword"><i class="fas fa-check-circle"></i> Actualizar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+   
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/Alertify/alertify.min.js"></script>
+
+
+    <script>
+        //FUNCION PARA ACTUALIZAR EL PASSWORD
+        $("#btn-actualizar-paswword").on("click", function (e) {
+            if (!$("form").valid()) {
+                return;
+            }
+            e.preventDefault();
+
+            $.ajax({
+                type: "POST",
+                url: "/Security/UpdatePassword",
+                data: $("form").serialize(),
+                beforeSend: function () {
+                    $(".contenedor-loader").slideToggle();
+                },
+                success: function (r) {
+                    $(".contenedor-loader").slideToggle();
+                    mostrarMensajeInfo(r);                 
+                },
+                error: function () {
+                    $(".contenedor-loader").slideToggle();
+                }
+            });           
+        });
+        //FUNCION PARA MOSTRAR UN MENSAJE AL USUARIO
+        function mostrarMensajeInfo(r) {
+            switch (r) {
+                case 1:
+                    alertify.success("<i class='fas fa-check'></i> Actualizado con éxito.");
+                    setTimeout(function () {
+                        window.location.href = "/Security/Index";
+                    }, 2000);
+                    break;
+                case 2:
+                    alertify.error("<i class='fas fa-times'></i> Error al actualizar.");                                          
+                    break;
+            }
+        }
+    </script>
+
+</body>
+</html>

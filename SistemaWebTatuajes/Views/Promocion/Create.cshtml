@@ -1,0 +1,80 @@
+﻿@model SistemaWebTatuajes.ViewModel.PromocionesViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<div class="container col-lg-6">
+    <div class="card shadow">
+        <div class="card-header text-center font-weight-bold border-relleno">
+            Nueva Promoción
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                @Html.AntiForgeryToken()
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label for="nom_Promocion" class="control-label font-weight-bolder">Descripción de la promoción<span class="text-danger font-weight-bold"> *</span></label>
+                    <textarea asp-for="nom_Promocion" class="form-control" cols="5" rows="5" style="resize:none;" placeholder="Escriba aquí..."></textarea>
+                    <span asp-validation-for="nom_Promocion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary" id="btn-guardar"><i class="fas fa-check"></i> Guardar</button>
+                </div>
+            </form>
+        </div>
+        <div class="m-3">
+            <a asp-action="Index">Ir al listado</a>
+        </div>
+    </div>
+</div>
+  
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    /*METODO AJAX*/
+    $("#btn-guardar").on("click", function (e) {
+
+        if (!$("form").valid()) {
+            return;
+        }
+
+        e.preventDefault();
+
+        $.ajax({
+            type: "POST",
+            data: $("form").serialize(),
+            url: "/Promocion/Insert",
+            beforeSend: function () {
+                $(".contenedor-loader").slideToggle();
+            },
+            success: function (r) {
+                $(".contenedor-loader").slideToggle();
+                mostrarMensajeInfo(r);
+            },
+            error: function () {
+                $(".contenedor-loader").slideToggle();
+            }
+
+        });
+
+
+    });
+    /*MUESTRA UN MENSAJE AL USUARIO*/
+    function mostrarMensajeInfo(r) {
+        switch (r) {
+            case 1:
+                alertify.success("<i class='fas fa-check'></i> Guardado con éxito.");
+                break;
+            case 2:
+                alertify.error("<i class='fas fa-times'></i> Error al guardar.");
+                break;
+
+        }
+        $("form")[0].reset();
+    }
+</script>
+}
