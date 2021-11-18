@@ -10,5 +10,6 @@ namespace SistemaWebTatuajes.IRepository
     {
         Task Insert(int id_artista, string[] nom_tatuajes);
         Task<List<Tatuajes>> GetById(int id_artista);
+        Task DeleteTatuajes(int Id);
     }
 }

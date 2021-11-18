@@ -11,7 +11,9 @@ namespace SistemaWebTatuajes.ViewModel
     {
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public int Id_Artista { get; set; }
+
         [Required(ErrorMessage = "Este campo es obligatorio")]
         public IFormFile[] tatuajes {get;set;}
+
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SistemaWebTatuajes.IService;
+using SistemaWebTatuajes.Models;
 using SistemaWebTatuajes.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,17 @@ namespace SistemaWebTatuajes.Controllers
         private ITatuajeService _service;
         private IArtistaService _serviceArtista;
         private IWebHostEnvironment _enviroment;
+        private ITatuajeService _serviceTatuaje;
 
-        public TatuajeController(ITatuajeService service, IWebHostEnvironment enviroment, IArtistaService serviceArtista)
+        public TatuajeController(ITatuajeService service, IWebHostEnvironment enviroment, IArtistaService serviceArtista, ITatuajeService serviceTatuaje)
         {
             _service = service;
             _enviroment = enviroment;
             _serviceArtista = serviceArtista;
+            _serviceTatuaje = serviceTatuaje;
         }
+
+
         //METODO QUE ME RETORNA LA VISTA DE AGREGAR LOS TATUAJES POR AUTOR, PARA LLENAR EL COMBO BOX EN registro de tatuajes por artista
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -50,6 +55,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View();
         }
+
         //METODO PARA INSERTAR TATUAJES
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -59,8 +65,8 @@ namespace SistemaWebTatuajes.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {                 
-                    await _service.Insert(tatuajeViewModel.Id_Artista,getFotos(tatuajeViewModel.tatuajes));
+                {
+                    await _service.Insert(tatuajeViewModel.Id_Artista, getFotos(tatuajeViewModel.tatuajes));
                     await GuardarFotosCarpeta(tatuajeViewModel);
                     msj = 1;
                 }
@@ -71,8 +77,9 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO PARA OBTENER UN ARREGLO DE LAS FOTOS DE TATUAJES DE CADA ARTISTA(METODO DE ARRIBA)
-        public string[] getFotos(IFormFile []fotos)
+        public string[] getFotos(IFormFile[] fotos)
         {
             string[] nom = new string[fotos.Length];
             int pos = 0;
@@ -83,14 +90,43 @@ namespace SistemaWebTatuajes.Controllers
             }
             return nom;
         }
+
         //METODO PARA GUARDAR EN CARPETA EN WWWWROOT/TIPOS
         public async Task GuardarFotosCarpeta(TatuajeViewModel tatuajeViewModel)
         {
-            foreach (var i in tatuajeViewModel.tatuajes) {
+            foreach (var i in tatuajeViewModel.tatuajes)
+            {
                 var filename = Path.Combine(_enviroment.ContentRootPath, "wwwroot/Tipos", i.FileName);
                 using FileStream stream = new FileStream(filename, FileMode.Create);
                 await i.CopyToAsync(stream);
             }
+        }
+
+        //METODO QUE MUESTRA LA VISTA PARA LISTAR LOS TATUAJES POR ID Y PODER ELIMINAR
+        public async Task<IActionResult> GetById(int id)
+        {
+            IEnumerable<Tatuajes> list = null;
+            if (id != 0)
+            {
+                list = new List<Tatuajes>();
+                list = await _serviceTatuaje.GetById(id);
+            }
+            return View(list);
+        }
+
+        //METODO PARA ELIMINAR TATUAJES
+        public async Task<IActionResult> Delete(int id, string nombre)
+        {
+            try
+            {
+                await _serviceTatuaje.DeleteTatuajes(id, nombre);
+            }
+            catch (Exception)
+            {
+
+            }
+            return RedirectToAction("GetById", "Tatuaje");
+
         }
     }
 }

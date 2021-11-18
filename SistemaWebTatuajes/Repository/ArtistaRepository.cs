@@ -12,15 +12,20 @@ namespace SistemaWebTatuajes.Repository
     public class ArtistaRepository : Conexion, IArtistaRepository
     {
         //METODO PARA ELIMINAR UN ARTISTA
-        public async Task Delete(int id_artista)
+        public async Task<List<string>> Delete(int id_artista)
         {
-            using (var conn = getConexion())
+            try
             {
-                var query = "DELETE FROM ARTISTAS WHERE ID_ARTISTA = @ID_ARTISTA";
-                await conn.ExecuteAsync(query, new
+                using (var conn = getConexion())
                 {
-                    ID_ARTISTA = id_artista
-                }, commandType: CommandType.Text);
+                    var query = "SP_DELETE_TATUAJES";
+                    var obj = await conn.QueryAsync<string>(query, new { _ID_ARTISTA = id_artista }, commandType: CommandType.StoredProcedure);
+                    return obj.AsList();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
 
@@ -31,7 +36,7 @@ namespace SistemaWebTatuajes.Repository
             using (var conn = getConexion())
             {
                 var query = "SELECT * FROM ARTISTAS LIMIT @SKIP,@LENGHT";
-                paginas.Registros = (List<Artistas>)await conn.QueryAsync<Artistas>(query,new { SKIP = skip, LENGHT= lenght }, commandType: CommandType.Text);
+                paginas.Registros = (List<Artistas>)await conn.QueryAsync<Artistas>(query, new { SKIP = skip, LENGHT = lenght }, commandType: CommandType.Text);
                 query = "SELECT COUNT(*) FROM ARTISTAS";
                 paginas.CantidadRegistros = await conn.ExecuteScalarAsync<int>(query, commandType: CommandType.Text);
             }

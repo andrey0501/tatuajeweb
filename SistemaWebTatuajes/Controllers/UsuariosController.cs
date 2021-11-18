@@ -48,6 +48,7 @@ namespace SistemaWebTatuajes.Controllers
 
             return View(list);
         }
+
         /*METODO QUE ME RETORNA LA VISTA PARA CREAR EL USUARIO*/
         [HttpGet]
         public IActionResult Create()
@@ -61,6 +62,7 @@ namespace SistemaWebTatuajes.Controllers
 
             return View();
         }
+
         [HttpGet]/*METODO QUE TRAE LOS DATOS DE UN USUARIO PARA SER EDITADO*/
         public async Task<IActionResult> Edit(int id_Usuario)
         {
@@ -85,6 +87,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return RedirectToAction("Index","Usuarios");
         }
+
         /*METODO PARA INSERTAR UN USUARIO*/
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,6 +110,7 @@ namespace SistemaWebTatuajes.Controllers
 
             return Json(msj);
         }
+
         //METODO PARA ACTUALIZAR USUARIOS
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -128,6 +132,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO PARA ELIMINAR UN USUARIO
         [HttpPost]     
         public async Task<IActionResult> Delete(int id_usuario)

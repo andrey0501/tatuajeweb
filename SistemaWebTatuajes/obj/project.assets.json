@@ -7020,20 +7020,28 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Bauglir\\.nuget\\packages\\": {}
+    "C:\\Users\\Rleit\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Bauglir\\Desktop\\TESIS Andrey\\PAGINA WEB\\Sin BD\\Andrey\\SistemaWebTatuajes\\SistemaWebTatuajes\\SistemaWebTatuajes.csproj",
+      "projectUniqueName": "C:\\Users\\Rleit\\OneDrive\\Documents\\Git\\Andrey\\tatuajeweb\\SistemaWebTatuajes\\SistemaWebTatuajes.csproj",
       "projectName": "SistemaWebTatuajes",
-      "projectPath": "C:\\Users\\Bauglir\\Desktop\\TESIS Andrey\\PAGINA WEB\\Sin BD\\Andrey\\SistemaWebTatuajes\\SistemaWebTatuajes\\SistemaWebTatuajes.csproj",
-      "packagesPath": "C:\\Users\\Bauglir\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Bauglir\\Desktop\\TESIS Andrey\\PAGINA WEB\\Sin BD\\Andrey\\SistemaWebTatuajes\\SistemaWebTatuajes\\obj\\",
+      "projectPath": "C:\\Users\\Rleit\\OneDrive\\Documents\\Git\\Andrey\\tatuajeweb\\SistemaWebTatuajes\\SistemaWebTatuajes.csproj",
+      "packagesPath": "C:\\Users\\Rleit\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Rleit\\OneDrive\\Documents\\Git\\Andrey\\tatuajeweb\\SistemaWebTatuajes\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+      ],
       "configFilePaths": [
-        "C:\\Users\\Bauglir\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Rleit\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
@@ -7093,7 +7101,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.209\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -1,0 +1,31 @@
+﻿@model IEnumerable<SistemaWebTatuajes.Models.Tendencias>
+
+@{
+    ViewData["Title"] = "UltimasTendencias";
+    Layout = "~/Views/Shared/HomeLayout.cshtml";
+}
+
+<div class="container-fluid">
+    @if (Model.Any<Tendencias>())
+    {
+        foreach (var item in Model)
+        {
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <div class="card">
+                        <div class="card-header bg-dark text-white">
+                            @item.Tipo
+                        </div>
+                        <div class="card-body bg-dark">
+                            <img src="~/Tendencias/@item.Ruta" style="width:100%;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-center justify-content-center">Por el momento no hay tendencias de tatuajes.</p>
+    }
+</div>

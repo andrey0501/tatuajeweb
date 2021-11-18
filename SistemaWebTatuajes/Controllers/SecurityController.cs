@@ -37,6 +37,7 @@ namespace SistemaWebTatuajes.Controllers
 
             return View();
         }
+
         //METODO PARA INICIAR SESION
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -68,6 +69,7 @@ namespace SistemaWebTatuajes.Controllers
             
             return Json(msj);
         }
+
         //METODO PARA ENVIAR CORREO CON PASOS PARA RECUPERAR LA CONTRASENA
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -90,12 +92,14 @@ namespace SistemaWebTatuajes.Controllers
             return Json(msj);
 
         }
+
         //METODO QUE MUESTRA LA VISTA DE ENVIAR EL EMAIL
         [HttpGet]
         public IActionResult Recovery()
         {
             return View();
         }
+
         //METODO QUE MUESTRA LA VISTA PARA ACTUALIZAR LA CONTRASENA
         [HttpGet]
         public async Task<IActionResult> ActualizarContrasena(string token)
@@ -126,6 +130,7 @@ namespace SistemaWebTatuajes.Controllers
             }
 
         }
+
         //METODO PARA ACTUALIZAR LA CONTRASENA
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -147,6 +152,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO PARA CERRAR CESSION
         [Authorize]
         [HttpGet]
@@ -155,6 +161,7 @@ namespace SistemaWebTatuajes.Controllers
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Home");
         }
+
         //METODO PARA LOS PERMISOS( NO TIENE PERMISOS SEGUN EL ROL)
         [HttpGet]
         public IActionResult Permisos()

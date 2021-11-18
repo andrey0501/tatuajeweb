@@ -50,6 +50,8 @@ namespace SistemaWebTatuajes
             services.AddScoped<ITatuajeService, TatuajeService>();
             services.AddScoped<ICalificaService, CalificaService>();
             services.AddScoped<ICalificaRepository, CalificaRepository>();
+            services.AddScoped<ITendenciasRepository, TendenciasRepository>();
+            services.AddScoped<ITendenciasService, TendenciasService>();
             /*REGISTRO DE MAPPER*/
             var mapperConfig = new MapperConfiguration(mapper => { mapper.AddProfile(new MappingProfile()); });
             IMapper mapper = mapperConfig.CreateMapper();

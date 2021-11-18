@@ -1,0 +1,55 @@
+﻿@model IEnumerable<SistemaWebTatuajes.Models.Tendencias>
+
+@{
+    ViewData["Title"] = "Tendencias";
+}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            Tendencias de tatuajes
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tipo
+                            </th>
+                            <th>
+                                Tatuaje
+                            </th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Tipo)
+                                    </td>
+                                    <td>
+                                        <img src="~/Tendencias/@item.Ruta" height="70" width="70" />
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

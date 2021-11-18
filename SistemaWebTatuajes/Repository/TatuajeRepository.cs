@@ -43,6 +43,7 @@ namespace SistemaWebTatuajes.Repository
             }
 
         }
+
         //METODO PARA LISTAR TATUAJES POR CEDULA(ARTISTA) GALERIA DE ARTISTAS
         public async Task<List<Tatuajes>> GetById(int id_artista)
         {
@@ -53,6 +54,24 @@ namespace SistemaWebTatuajes.Repository
                 list = (List<Tatuajes>)await conn.QueryAsync<Tatuajes>(query,new { ID_ARTISTA = id_artista },commandType:CommandType.Text);
             }
             return list;
+        }
+
+        //METODO PARA ELIMINAR TATUAJES
+        public async Task DeleteTatuajes(int Id)
+        {
+            try
+            {
+                using (var conn = getConexion())
+                {
+                    var query = "DELETE FROM TATUAJES WHERE ID_TATUAJE = @ID_TATUAJE";
+                    await conn.ExecuteAsync(query, new { ID_TATUAJE = Id }, commandType: CommandType.Text);
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+           
         }
 
 

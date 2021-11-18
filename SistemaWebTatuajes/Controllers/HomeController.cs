@@ -23,7 +23,7 @@ namespace SistemaWebTatuajes.Controllers
         private ICalificaService _serviceCalifica;
         private IMapper _mapper;
 
-        public HomeController(IPromocionService service, IArtistaService serviceArtista, 
+        public HomeController(IPromocionService service, IArtistaService serviceArtista,
             ITatuajeService serviceTatuaje, IMasterEmail mail, IMapper mapper, ICalificaService serviceCalifica)
         {
             _service = service;
@@ -34,14 +34,15 @@ namespace SistemaWebTatuajes.Controllers
             _serviceCalifica = serviceCalifica;
         }
 
-        [HttpGet]// TRAE LA LISTA DE PROMOCIONES
+        // TRAE LA LISTA DE PROMOCIONES
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             List<Promociones> promo = new List<Promociones>();
             try
             {
                 promo = await _service.getPromociones();
-                
+
             }
             catch (Exception ex)
             {
@@ -49,6 +50,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(promo);
         }
+
         //MUESTRA LA PAGINA DE ARTISTAS
         [HttpGet]
         public async Task<IActionResult> Artistas(int? pagina)
@@ -70,16 +72,19 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(list);
         }
+
+        //OBTIENE LA VISTA DE CONTACTOS
         [HttpGet]
-        public IActionResult Contact()//OBTIENE LA VISTA DE CONTACTOS
+        public IActionResult Contact()
         {
             return View();
         }
+
         //METODO PARA VER LOS TATUAJES DE UN ARTISTA
         [HttpGet]
         public async Task<IActionResult> Tatuajes(int cedula)
         {
-            List<Tatuajes> list = null ;
+            List<Tatuajes> list = null;
             try
             {
                 if (cedula != 0)
@@ -93,9 +98,10 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(list);
         }
+
         //METODO PARA ENVIAR MAIL
         [HttpPost]
-        public async Task<IActionResult> EnviarMail(string name,string email,string subject, string message)
+        public async Task<IActionResult> EnviarMail(string name, string email, string subject, string message)
         {
             try
             {
@@ -103,21 +109,24 @@ namespace SistemaWebTatuajes.Controllers
                 {
                     List<string> list = new List<string>();
                     list.Add(email);
-                    await _mail.SendEmail(message, subject + " "+name,list);
+                    await _mail.SendEmail(message, subject + " " + name, list);
                     return StatusCode(200);
-                }else return StatusCode(500);
+                }
+                else return StatusCode(500);
             }
             catch (Exception)
             {
                 return StatusCode(500);
             }
         }
+
         //METODO QUE MUESTRA LA VISTA DE CALIFICAR
         [HttpGet]
         public IActionResult Calificar()
         {
             return View();
         }
+
         //METODO PARA CALIFICAR
         [HttpPost]
         public async Task<IActionResult> Insert(CalificaViewModel calificaViewModel)

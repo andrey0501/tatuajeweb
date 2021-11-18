@@ -1,0 +1,77 @@
+﻿@model IEnumerable<SistemaWebTatuajes.Models.Tatuajes>
+
+@{
+    ViewData["Title"] = "List";
+}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            Lista de Tatuajes por artista
+        </div>
+        <div class="card-body">
+            <div class="row mb-2">
+                <div class="col-sm-12 col-md-6 col-lg-8">
+                    <input type="text" class="form-control" id="txtid" placeholder="Ingrese el id del artista" />
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-4">
+                    <button class="btn btn-outline-info btn-block" id="btn-buscar">Buscar</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Tatuaje
+                            </th>
+                            <th>
+                                Id Artista
+                            </th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id_Tatuaje)
+                                    </td>
+                                    <td>
+                                        <img src="~/Tipos/@item.Nom_Tatuaje" height="70" width="70"/>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Id_Artista)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Eliminar", "Delete", new { id = item.Id_Tatuaje, nombre = item.Nom_Tatuaje })
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+
+        $("#btn-buscar").on("click", function () {
+            let id = $("#txtid").val();
+            if (id != "") {
+                window.location.href = "/Tatuaje/GetById/?id=" + id;
+            }
+        });
+
+    </script>
+}
+

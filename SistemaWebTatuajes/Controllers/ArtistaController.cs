@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace SistemaWebTatuajes.Controllers
 {
-    [Authorize(Roles ="Administrador,Usuario")]
+    [Authorize(Roles = "Administrador,Usuario")]
     public class ArtistaController : Controller
     {
         private IArtistaService _service;
         private IWebHostEnvironment _enviroment;
         private IMapper _mapper;
 
-        public ArtistaController(IArtistaService service, IWebHostEnvironment enviroment, IMapper mapper)
+        public ArtistaController(IArtistaService service, IMapper mapper, IWebHostEnvironment enviroment)
         {
             _service = service;
-            _enviroment = enviroment;
             _mapper = mapper;
+            _enviroment = enviroment;
         }
 
 
@@ -39,7 +39,7 @@ namespace SistemaWebTatuajes.Controllers
                 int? skip = 10 * (pagina - 1);
                 int lenght = 10;
 
-                var res = await _service.GetAll(skip,lenght);
+                var res = await _service.GetAll(skip, lenght);
                 list = res.Registros;
                 ViewBag.totalpaginas = (Math.Ceiling((decimal)res.CantidadRegistros / 10));
             }
@@ -49,12 +49,14 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(list);
         }
+
         //METODO MOSTRAR VISTA DE AGREGAR ARTISTAS
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
         //METODO PARA AGREGAR ARTISTAS
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -73,7 +75,7 @@ namespace SistemaWebTatuajes.Controllers
                     artista.nombre = artistasViewModel.nombre;
                     artista.apellidos = artistasViewModel.apellidos;
                     artista.bibligrafia = artistasViewModel.bibligrafia;
-                    artista.foto = foto.Replace(" ",string.Empty);
+                    artista.foto = foto.Replace(" ", string.Empty);
                     //GUARDO EN LA BD  
                     await _service.Insert(artista);
                     //GUARDO LA FOTO EN CARPETA
@@ -91,6 +93,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO PARA ELIMINAR ARTISTAS
         [HttpPost]
         public async Task<IActionResult> Delete(int cedula, string foto)
@@ -100,18 +103,17 @@ namespace SistemaWebTatuajes.Controllers
             {
                 if (cedula != 0 && foto != "")
                 {
-                    await _service.Delete(cedula);
-                    var filename = Path.Combine(_enviroment.ContentRootPath, "wwwroot/Artistas", foto);
-                    System.IO.File.Delete(filename);
+                    await _service.Delete(cedula, foto);
                     msj = 1;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 msj = 2;
             }
             return Json(msj);
         }
+
         //METODO PARA EDITAR
         [HttpGet]
         public async Task<IActionResult> Edit(int cedula)
@@ -131,6 +133,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(artistasViewModel);
         }
+
         //METODO PARA ACTUALIZAR
         [HttpPost]
         [ValidateAntiForgeryToken]

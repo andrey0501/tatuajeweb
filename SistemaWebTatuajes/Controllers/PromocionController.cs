@@ -22,6 +22,7 @@ namespace SistemaWebTatuajes.Controllers
             _service = service;
             _mapper = mapper;
         }
+
         //METODO QUE RETORNA LA VISTA DE PROMOCIONES
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -42,12 +43,14 @@ namespace SistemaWebTatuajes.Controllers
             }
             return View(list);
         }
+
         //METODO QUE MUESTRA LA VISTA PARA AGREGAR UNA  PROMOCION
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+
         //METODO PARA AGREGAR UNA PROMOCION
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -69,6 +72,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO QUE MUESTRA LA VISTA PARA AGREGAR UNA  PROMOCION
         [HttpGet]
         public async Task<IActionResult> Edit(int idPromocion)
@@ -91,6 +95,7 @@ namespace SistemaWebTatuajes.Controllers
             return View();
 
         }
+
         //METODO PARA ACTUALIZAR UNA PROMOCION
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -112,6 +117,7 @@ namespace SistemaWebTatuajes.Controllers
             }
             return Json(msj);
         }
+
         //METODO PARA ELIMINAR UNA PROMOCION
         [HttpPost]     
         public async Task<IActionResult> Delete(int id_Promocion)
