@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using SistemaWebTatuajes.Validaciones;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,7 @@ namespace SistemaWebTatuajes.ViewModel
         public int Id_Artista { get; set; }
 
         [Required(ErrorMessage = "Este campo es obligatorio")]
+        [ValidarExtension(new[] { "image/png", "image/jpg", "image/jpeg", "image/JPEG" })]
         public IFormFile[] tatuajes {get;set;}
 
     }
